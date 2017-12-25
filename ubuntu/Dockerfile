@@ -235,7 +235,8 @@ RUN apt-get install -y build-essential autoconf automake libtool curl autotools-
 	git submodule update --init; \
 	make; \
 	make install; \
-	git clone https://github.com/google/protobuf.git; \
+	ldconfig
+RUN	git clone https://github.com/google/protobuf.git; \
 	cd protobuf; \
 	./autogen.sh; \
 	./configure; \
