@@ -246,7 +246,7 @@ RUN apt-get install -y build-essential autoconf automake libtool curl autotools-
 	pip install grpcio; \
 	pip install grpcio-tools
 
-RUN cd /resembla/example; \
+RUN cd /resembla/example/grpc; \
 	./generate_grpc_templates.sh
 
 
