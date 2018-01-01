@@ -223,33 +223,37 @@ RUN git clone https://github.com/cjlin1/libsvm.git; \
 	ldconfig; \
 	cd /
 
-RUN apt update && apt install -y pkg-config --no-install-recommends; \
-	git clone https://github.com/tuem/resembla.git; \
-	cd /resembla/src; \
-	make; \
-	make install
-
-RUN apt-get install -y build-essential autoconf automake libtool curl autotools-dev unzip --no-install-recommends; \
-	git clone -b $(curl -L https://grpc.io/release) https://github.com/grpc/grpc; \
+RUN apt-get update && apt-get install -y build-essential autoconf automake libtool curl autotools-dev unzip pkg-config --no-install-recommends; \
+	# git clone -b $(curl -L https://grpc.io/release) https://github.com/grpc/grpc; \
+	git clone -b v1.2.5 https://github.com/grpc/grpc; \
 	cd grpc; \
 	git submodule update --init; \
-	make; \
-	make install; \
-	ldconfig
-RUN	git clone https://github.com/google/protobuf.git; \
-	cd protobuf; \
+	cd third_party/protobuf/; \
 	./autogen.sh; \
 	./configure; \
 	make; \
-	make check; \
 	make install; \
+	cd ../../; \
 	ldconfig; \
+	make; \
+	make install; \
 	pip install --upgrade pip; \
 	pip install grpcio; \
-	pip install grpcio-tools
+	pip install grpcio-tools; \
+	pip install protobuf
 
-RUN cd /resembla/example/grpc; \
-	./generate_grpc_templates.sh
+RUN git clone https://github.com/tuem/resembla.git; \
+	cd /resembla/src; \
+	make; \
+	make install; \
+	#cd /resembla/misc/mecab_dic/mecab-unidic-neologd/; \
+	#./install-mecab-unidic-neologd.sh; \
+	cd /resembla/src/executable; \
+	make; \
+	make install; \
+	ldconfig
 
+RUN cd /resembla/example/grpc/src; \
+	make
 
 CMD ["/bin/bash"]
