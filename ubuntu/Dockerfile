@@ -212,11 +212,11 @@ RUN git clone https://github.com/cjlin1/libsvm.git; \
 	cd python; \
 	make; \
 	mkdir -p /usr/local/bin/libsvm/tools; \
-	mv /libsvm/svm-predict /libsvm/svm-scale /libsvm/svm-train /usr/local/bin/libsvm; \
+	mv /libsvm/svm-predict /libsvm/svm-scale /libsvm/svm-train /usr/local/bin/libsvm/; \
 	mv /libsvm/tools/*py /usr/local/bin/libsvm/tools/; \
 	mv /libsvm/libsvm.so.2 /usr/local/lib/; \
 	cd /usr/local/lib; \
-	ln -s  libsvm.so.2  libsvm.so; \
+	ln -s libsvm.so.2 libsvm.so; \
 	export PATH=$PATH:/usr/local/bin/libsvm; \
 	mkdir /usr/local/include/libsvm/; \
 	mv /libsvm/svm.h /usr/local/include/libsvm/; \
@@ -242,12 +242,13 @@ RUN apt-get update && apt-get install -y build-essential autoconf automake libto
 	pip install grpcio-tools; \
 	pip install protobuf
 
-RUN git clone https://github.com/tuem/resembla.git; \
+# https://github.com/tuem/resembla.git
+RUN git clone https://github.com/kzinmr/resembla.git; \
 	cd /resembla/src; \
 	make; \
 	make install; \
-	#cd /resembla/misc/mecab_dic/mecab-unidic-neologd/; \
-	#./install-mecab-unidic-neologd.sh; \
+	cd /resembla/misc/mecab_dic/mecab-unidic-neologd/; \
+	./install-mecab-unidic-neologd.sh; \
 	cd /resembla/src/executable; \
 	make; \
 	make install; \
