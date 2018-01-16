@@ -259,15 +259,11 @@ RUN git clone https://github.com/kzinmr/resembla.git; \
 	cd /
 
 RUN cd /resembla/example/grpc/src; \
-	make
+	make; \
+	cp /resembla/example/grpc/src/resembla_server /usr/local/bin/
 
 RUN mkdir -p /resembla/proj/corpus
 
 RUN apt-get update && apt-get install -y iproute2 iptables nano --no-install-recommends
-
-    # cd /resembla/src/executable/; \
-    # resembla_index -c ../../example/conf/apple.json
-    # cd ../../example/grpc/src; \
-    # ./resembla_server -c ../conf/resembla_server.json.sample
 
 CMD ["/bin/bash"]
